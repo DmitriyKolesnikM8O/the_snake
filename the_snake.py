@@ -1,4 +1,4 @@
-from random import choice, randint
+from random import randint
 import pygame
 from typing import Optional, Tuple, List
 
@@ -41,26 +41,33 @@ clock = pygame.time.Clock()
 
 # Тут опишите все классы игры.
 class GameObject:
+    """Экран обьекта"""
     def __init__(self, position: Optional[Tuple[int, int]] = None,
                  body_color: Optional[Tuple[int, int, int]] = None) -> None:
+        """Инициализация объект на игры поле."""
         self.position = position or (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         self.body_color = body_color or (255, 255, 255)
     
     def draw(self, surface: pygame.Surface) -> None:
+        """Абстрактный метод для отрисовки объект на экран."""
         pass
 
     def draw_cell(self, surface: pygame.Surface, position: Tuple[int, int],
                   color: Optional[Tuple[int, int, int]] = None) -> None:
+        """Отрисовка ячеек на экран"""
         rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(surface, color or self.body_color, rect)
         pygame.draw.rect(surface, BORDER_COLOR, rect, 1)
 
 class Apple(GameObject):
+    """Яблоко"""
     def __init__(self) -> None:
+        """Инициализирует яблоко на игры поле."""
         super().__init__(None, APPLE_COLOR)
         self.randomize_position()
     
     def randomize_position(self) -> None:
+        """Установка яблока на рандомное место на поле игры"""
         self.position = (
             randint(0, GRID_WIDTH - 1) * GRID_SIZE,
             randint(0, GRID_HEIGHT - 1) * GRID_SIZE
@@ -71,7 +78,9 @@ class Apple(GameObject):
         self.draw_cell(surface, self.position)
 
 class Snake(GameObject):
+    """Змейка"""
     def __init__(self) -> None:
+        """Инициализирует змейку на игры поле."""
         super().__init__((GRID_WIDTH // 2 * GRID_SIZE,
                           GRID_HEIGHT // 2 * GRID_SIZE), SNAKE_COLOR)
         self.length: int = 1
@@ -80,11 +89,13 @@ class Snake(GameObject):
         self.next_direction: Optional[Tuple[int, int]] = None
 
     def update_direction(self):
+        """Обновление направления движения змейки"""
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None  
     
     def move(self) -> None:
+        """Движение змейки"""
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
@@ -127,6 +138,7 @@ class Snake(GameObject):
         self.next_direction = None
 
 def handle_keys(game_object):
+    """Обработка нажатия клавиш"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
