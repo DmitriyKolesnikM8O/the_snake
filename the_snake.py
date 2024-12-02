@@ -49,7 +49,6 @@ class GameObject:
         self.position = position or (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         self.body_color = body_color or (255, 255, 255)
 
-
     def draw(self, surface: pygame.Surface) -> None:
         """Абстрактный метод для отрисовки объект на экран."""
         pass
@@ -121,18 +120,18 @@ class Snake(GameObject):
     def draw(self, surface: pygame.Surface) -> None:
         """Отрисовывает змейка на экране затирая след."""
         for position in self.positions[:-1]:
-            self.draw_cell(surface, position)
+        self.draw_cell(surface, position)
 
         head_position = self.positions[0]
         self.draw_cell(surface, head_position, SNAKE_COLOR)
-    
+
     def get_head_position(self) -> Tuple[int, int]:
         """
         Возвращает позиция головы змейка
         (там первый элемент в списке positions).
         """
         return self.positions[0]
-    
+
     def reset(self) -> None:
         """
         Сбрасывает змейка в начале состояние
@@ -159,7 +158,9 @@ def handle_keys(game_object):
             elif event.key == pygame.K_RIGHT and game_object.direction != LEFT:
                 game_object.next_direction = RIGHT
 
+
 def main():
+    """функция выполнения игры"""
     # Инициализация PyGame:
     pygame.init()
     # Тут нужно создать экземпляры классов.
