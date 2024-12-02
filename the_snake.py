@@ -120,7 +120,7 @@ class Snake(GameObject):
     def draw(self, surface: pygame.Surface) -> None:
         """Отрисовывает змейка на экране затирая след."""
         for position in self.positions[:-1]:
-        self.draw_cell(surface, position)
+            self.draw_cell(surface, position)
 
         head_position = self.positions[0]
         self.draw_cell(surface, head_position, SNAKE_COLOR)
