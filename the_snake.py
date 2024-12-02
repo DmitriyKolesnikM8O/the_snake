@@ -97,7 +97,7 @@ class Snake(GameObject):
         """Обновление направления движения змейки"""
         if self.next_direction:
             self.direction = self.next_direction
-            self.next_direction = None  
+            self.next_direction = None
 
     def move(self) -> None:
         """Движение змейки"""
