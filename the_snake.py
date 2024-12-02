@@ -42,12 +42,14 @@ clock = pygame.time.Clock()
 # Тут опишите все классы игры.
 class GameObject:
     """Экран обьекта"""
+
     def __init__(self, position: Optional[Tuple[int, int]] = None,
                  body_color: Optional[Tuple[int, int, int]] = None) -> None:
         """Инициализация объект на игры поле."""
         self.position = position or (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         self.body_color = body_color or (255, 255, 255)
-    
+
+
     def draw(self, surface: pygame.Surface) -> None:
         """Абстрактный метод для отрисовки объект на экран."""
         pass
@@ -59,13 +61,15 @@ class GameObject:
         pygame.draw.rect(surface, color or self.body_color, rect)
         pygame.draw.rect(surface, BORDER_COLOR, rect, 1)
 
+
 class Apple(GameObject):
     """Яблоко"""
+
     def __init__(self) -> None:
         """Инициализирует яблоко на игры поле."""
         super().__init__(None, APPLE_COLOR)
         self.randomize_position()
-    
+
     def randomize_position(self) -> None:
         """Установка яблока на рандомное место на поле игры"""
         self.position = (
@@ -77,8 +81,10 @@ class Apple(GameObject):
         """Отрисовывает яблоко на игры поверхности."""
         self.draw_cell(surface, self.position)
 
+
 class Snake(GameObject):
     """Змейка"""
+
     def __init__(self) -> None:
         """Инициализирует змейку на игры поле."""
         super().__init__((GRID_WIDTH // 2 * GRID_SIZE,
@@ -93,7 +99,7 @@ class Snake(GameObject):
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None  
-    
+
     def move(self) -> None:
         """Движение змейки"""
         if self.next_direction:
